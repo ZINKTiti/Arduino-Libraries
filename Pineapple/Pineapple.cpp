@@ -6,16 +6,18 @@
 #include "WProgram.h"
 #endif
 
-uint8_t Pineapple::registerPins(int SER_Pin, int RCLK_Pin, int SRCLK_Pin, int Number_of_Registers) {
+uint8_t Pineapple::registerPins(int SER_Pin, int RCLK_Pin, int SRCLK_Pin, int OE_Pin, int Number_of_Registers) {
     _SER_Pin = SER_Pin;
     _RCLK_Pin = RCLK_Pin;
     _SRCLK_Pin = SRCLK_Pin;
+    _OE_Pin = OE_Pin;
     
     _Number_of_Registers = Number_of_Registers;
 	
 	pinMode(_SER_Pin, OUTPUT);
 	pinMode(_RCLK_Pin, OUTPUT);
 	pinMode(_SRCLK_Pin, OUTPUT);
+	pinMode(_OE_Pin, OUTPUT);
 	
 	clear(); //reset all register pins
 	update();
@@ -208,4 +210,9 @@ void Pineapple::setDecimalPoint(int digit, boolean decimalState) {
             update();
         }
     }
+}
+
+void Pineapple::setbrightness(int brightness) // 0 to 255
+{
+  analogWrite(outputEnablePin, 255-brightness);
 }
